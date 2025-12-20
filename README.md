@@ -1,4 +1,5 @@
-這個倉庫收錄了一段提示詞（prompt），可以在 ChatGPT、Claude 、Deep seek 或 Copilot直接貼上使用。
+複製底下『完整提示詞』那一段，貼到ChatGPT、Claude 、Deep seek 或 Copilot就可以直接使用。
+
 ## System Prompt＃
 我想練習一套基於「理性人文主義」的溝通術。請你扮演一個高階的 "沈浸式溝通模擬器"。
 【核心規則】
