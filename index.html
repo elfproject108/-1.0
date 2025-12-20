@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>理性人文主義・AI 對話提示詞</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#0b0b10;
+      color:#f5f5f5;
+      padding:16px;
+      line-height:1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      color:#ffe08a;
+    }
+    textarea {
+      width:100%;
+      min-height:260px;
+      background:#050509;
+      color:#f5f5f5;
+      padding:10px;
+      border-radius:6px;
+      border:1px solid #333;
+      box-sizing:border-box;
+      font-size:0.9rem;
+      white-space:pre-wrap;
+    }
+    button {
+      margin-top:8px;
+      margin-right:8px;
+      padding:8px 14px;
+      border-radius:6px;
+      border:none;
+      cursor:pointer;
+      font-size:0.9rem;
+    }
+    #loadBtn { background:#3b82f6; color:white; }
+    #copyBtn { background:#16a34a; color:white; }
+    #clearBtn { background:#4b5563; color:white; }
+    button:disabled { opacity:0.6; cursor:wait; }
+    .small { font-size: 0.85rem; color:#a3a3a3; }
+    .card {
+      background:#111827;
+      border-radius:8px;
+      padding:12px;
+      margin-bottom:12px;
+      border:1px solid #1f2937;
+    }
+    ol { padding-left:20px; }
+    code {
+      background:#111827;
+      padding:2px 4px;
+      border-radius:4px;
+      font-size:0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>理性人文主義・AI 對話提示詞</h1>
+  <p class="small">
+    這個小頁面會自動從 GitHub 讀取你的 README 中那段「完整提示詞」，讓你或朋友只要按兩個按鈕，就能快速複製並貼到 ChatGPT、Claude、DeepSeek 或 Copilot 的第一個訊息中使用。
+  </p>
+
+  <div class="card">
+    <h2>使用步驟</h2>
+    <ol class="small">
+      <li>按下面的「載入 GitHub 上的提示詞」，稍等數秒。</li>
+      <li>檢查下方文字框內容是否正確。</li>
+      <li>按「複製整段 Prompt」。</li>
+      <li>開啟 ChatGPT／Claude／DeepSeek／Copilot，新建對話，把這段完整貼上並送出。</li>
+      <li>看到模型回覆「明白」或類似確認後，再開始問你真正的問題。</li>
+    </ol>
+  </div>
+
+  <h2>Step 1：載入提示詞</h2>
+  <button id="loadBtn">載入 GitHub 上的提示詞</button>
+  <span id="loadStatus" class="small"></span>
+
+  <h2>Step 2：確認與複製</h2>
+  <textarea id="promptBox" placeholder="按上面的按鈕後，這裡會出現你的完整 System Prompt。"></textarea>
+  <br />
+  <button id="copyBtn">複製整段 Prompt</button>
+  <button id="clearBtn">清空</button>
+  <span id="copyStatus" class="small"></span>
+
+  <div class="card">
+    <h2>給使用者的小提示</h2>
+    <ul class="small">
+      <li>建議在一個新對話裡使用這段 Prompt，不要接在舊對話後面。</li>
+      <li>如果模型出現偏離「理性人文主義」風格的回答，可以提醒它「請完全遵守系統提示詞中的角色設定」。</li>
+      <li>這段 Prompt 的原始版本維護在 GitHub 的 README 中，更新後按一次「載入」就會同步。</li>
+    </ul>
+  </div>
+
+  <script>
+    // 這裡使用你剛找到的 Raw 連結
+    const README_RAW_URL = "https://raw.githubusercontent.com/elfproject108/-1.0/main/README.md";
+
+    const loadBtn = document.getElementById("loadBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const promptBox = document.getElementById("promptBox");
+    const copyStatus = document.getElementById("copyStatus");
+    const loadStatus = document.getElementById("loadStatus");
+
+    loadBtn.addEventListener("click", async () => {
+      loadBtn.disabled = true;
+      loadStatus.textContent = " 讀取中，請稍候…";
+      copyStatus.textContent = "";
+      try {
+        const res = await fetch(README_RAW_URL);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const text = await res.text();
+        promptBox.value = text;
+        loadStatus.textContent = " 已從 GitHub 成功載入。";
+      } catch (err) {
+        promptBox.value = "";
+        loadStatus.textContent = " 讀取失敗，請稍後再試或檢查連結是否正確。";
+      } finally {
+        loadBtn.disabled = false;
+      }
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      copyStatus.textContent = "";
+      try {
+        await navigator.clipboard.writeText(promptBox.value);
+        copyStatus.textContent = " 已複製，請貼到 ChatGPT／Claude／DeepSeek／Copilot 的第一個訊息。";
+      } catch (err) {
+        copyStatus.textContent = " 無法自動複製，請手動選取文字複製。";
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      promptBox.value = "";
+      copyStatus.textContent = "";
+      loadStatus.textContent = "";
+    });
+  </script>
+</body>
+</html>
