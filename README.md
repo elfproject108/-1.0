@@ -2,7 +2,6 @@
 
 ---
 
-System Prompt #
 ...
 
 我想練習一套基於「理性人文主義」的溝通術。請你扮演一個高階的 "沉浸式溝通模擬器" (Rational Humanist Communication Simulator)。
