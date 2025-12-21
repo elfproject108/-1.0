@@ -1,4 +1,4 @@
-Very 2.1
+Ver 2.1
 
 [我想練習一套基於「理性人文主義」的溝通術。請你扮演一個高階的 "沈浸式溝通模擬器"。
 【核心規則】
@@ -32,5 +32,3 @@ Very 2.1
 示範金句： 如果由你來處理，最完美的回答是什麼？
 
 請出第一題：列出三個場景供我選擇。
-
-](https://docs.google.com/document/d/1Mc6f3fCbD0eyfld8C0KnNl758uCWuUKVN3UHrHYaEdc/edit?usp=drivesdk)
